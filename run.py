@@ -31,26 +31,58 @@ def survey(diet, name):
     The main survey function, which will collect the data inputted by survey takers
     Meat questions are reserved for non-vegetarians as to not skew the data
     """
-    talker("Let's get started! What do you think of...")
-    question1 = inputer("Apples, Bananas, and Mangoes? Please separate your answers by commas, for example \n 5,3,10\n")
-    #code to raise exception if the value isn't an integer
-    talker("Very good! Moving onto vegetables, what do you think of...")
-    question2 = inputer("Cucumbers, tomatoes, and potatoes?\n Tomatoes aren't technically fruits, but you know what we mean! Please separate your answers by commas, for example \n 5,3,10\n ")
-    #code to raise exception if the value isn't an integer
-    answer1 = question1.split(",")
-    answer2 = question2.split(",")
-    if diet == "no" or "n":
-        talker(f"Very good! So, {name}, let's talk meat: what do you think about...")
-        question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
-        answer3 = question3.split(",")
-        #code to add numeric value to the spreadsheet
-        #code to raise exception if the value isn't an integer
-        print(answer3)
-        return answer3
-        #code to add numeric value to the spreadsheet
-    print(answer1,answer2)
-    return answer1, answer2
-    #code to add numeric value to the spreadsheet
+    try:
+        talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
+        
+        question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
+        
+        cleaner1 = question1.split(",")
+        
+        answer1 = [int(i) for i in cleaner1]
+        # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
+        
+        if len(answer1) > 3:
+            raise ValueError("You put in too many numbers!")
+    except ValueError as e:
+        print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+    
+    try:
+        talker("Very good! Moving onto vegetables...")
+        
+        talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
+        
+        talker("Tomatoes aren't technically fruits, but you know what we mean!")
+        
+        question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
+        
+        cleaner2 = question2.split(",")
+        
+        answer2 = [int(x) for x in cleaner2]
+        
+        if len(answer2) > 3:
+            raise ValueError("You put in too many numbers!")
+                # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int 
+    except ValueError as e:
+            rint(f"Error! {e} try again, and just numbers this time!")
+    
+    try: 
+        if diet == "no" or diet == "n":
+            talker(f"Very good! So, {name}, let's talk meat: what do you think about...")
+            question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+            cleaner3 = question3.split(",")
+            answer3 = [int(x) for x in cleaner3]
+            if len(answer2) > 3:
+                raise ValueError("You put in too many numbers!")
+        elif diet == "yes" or diet == "y":
+            return answer1, answer2
+    except ValueError as e:
+        print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+    else:
+        return answer1,answer2,answer3
+
+
+
+# code to add numeric value to the spreadsheet
 
 # function to add survey results to relevant spreadsheet
 
