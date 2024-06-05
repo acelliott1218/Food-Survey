@@ -98,14 +98,12 @@ class Big():
         if diet == "no" or diet == "n":
             return self.answer1,self.answer2,self.answer3
 
-    def appender(self, veg_data, standard_data, diet):
-        if diet == "yes" or diet == "y":
-            veg_data.append(self.answer1)
-            veg_data.append(self.answer2)
-        else:
-            standard_data.append(self.answer1)
-            standard_data.append(self.answer2)
-            standard_data.append(self.answer3)
+    def appender(self, diet, vegetarian, non_vegetarian):
+        #currently, there is an issue with getting the diet function.
+        # there is also the problem of vegetarian appending to standard, instead of vegetarian
+        # however, at least the code actually appends now. so that's progress 
+        self.answer1 = [int(i) for i in self.answer1]
+        vegetarian.append_row(self.answer1)
 
 
 
@@ -123,13 +121,15 @@ def main():
     name = inputer("What is your name?\n").title() #code to restrict this to strings at certain character limits
     diet = inputer("Are you vegetarian? Please enter 'yes' or 'no'.\n").lower()
     review = talker(f'Welcome {name}! Since you answered "{diet}", your survey will be tailored with this in mind!')
+
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
-    standard_data = non_vegetarian.get_all_values()
-    veg_data = vegetarian.get_all_values()
+
+
     b = Big()
     b.survey(diet, name)
-    b.appender(veg_data, standard_data,diet)
+    b.appender(diet, vegetarian, non_vegetarian)
+    
 
 if __name__ == "__main__":
     main()
