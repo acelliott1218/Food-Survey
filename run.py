@@ -73,7 +73,7 @@ class Big():
                 raise ValueError("You put in too many numbers!")
                     # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int 
         except ValueError as e:
-                rint(f"Error! {e} try again, and just numbers this time!")
+                print(f"Error! {e} try again, and just numbers this time!")
         
         try: 
             #section to separate data from non-vegetarians
@@ -99,18 +99,21 @@ class Big():
             return self.answer1,self.answer2,self.answer3
 
     def appender(self, diet, vegetarian, non_vegetarian):
-        #currently, there is an issue with getting the diet function.
-        # there is also the problem of vegetarian appending to standard, instead of vegetarian
-        # however, at least the code actually appends now. so that's progress 
+        # however, at least the code actually appends now. so that's progress
+        print("Adding results to spreadsheet...")
         self.answer1 = [int(i) for i in self.answer1]
-        vegetarian.append_row(self.answer1)
+        self.answer2 = [int(i) for i in self.answer2]
 
+        if diet == "no" or diet == "n":
+            self.answer3 = [int(i) for i in self.answer3]
 
+            non_vegetarian.append_row(self.answer1)
+            non_vegetarian.append_row(self.answer2)
+            non_vegetarian.append_row(self.answer3)
+        if diet == "yes" or diet == "y":
+            vegetarian.append_row(self.answer1)
+            vegetarian.append_row(self.answer2)
 
-
-# code to add numeric value to the spreadsheet
-
-# function to add survey results to relevant spreadsheet
 
 # function to calculate average responses
 
