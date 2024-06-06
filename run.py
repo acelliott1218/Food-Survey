@@ -114,14 +114,12 @@ class Big():
 
         if diet == "no" or diet == "n":
             self.answer3 = [int(i) for i in self.answer3]
-
-            non_vegetarian.append_row(self.answer1)
-            non_vegetarian.append_row(self.answer2)
-            non_vegetarian.append_row(self.answer3)
+            answers = self.answer1 + self.answer2 + self.answer3
+            non_vegetarian.append_row(answers)
             print("Results uploaded!")
         if diet == "yes" or diet == "y":
-            vegetarian.append_row(self.answer1)
-            vegetarian.append_row(self.answer2)
+            answers = self.answer1 + self.answer2
+            vegetarian.append_row(answers)
             print("Results uploaded!")
 
 
