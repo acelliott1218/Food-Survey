@@ -28,7 +28,7 @@ def talker(words):
 
 class Big():
     """
-    This gargantuan class combines the survive logic AND the appending logic
+    This gargantuan class combines the survey logic AND the appending logic
     while allowing easy access to the answer attributes across the class its self
     """
     def __init__(self):
@@ -99,8 +99,16 @@ class Big():
             return self.answer1,self.answer2,self.answer3
 
     def appender(self, diet, vegetarian, non_vegetarian):
+        """
+        adds the relevant data from the survey to the vegetarian or non-vegetarian tabs
+        converts the answers from survey() to integers (again) so they can be appended
+        this method does not touch the statistics page, in the interests of keeping the code
+        short
+        """
         # however, at least the code actually appends now. so that's progress
         print("Adding results to spreadsheet...")
+        #the answers have to be re-stated for the code to work
+        #it might not be necessary to keep the return statements or int conversions in survey() bc of this
         self.answer1 = [int(i) for i in self.answer1]
         self.answer2 = [int(i) for i in self.answer2]
 
@@ -110,9 +118,11 @@ class Big():
             non_vegetarian.append_row(self.answer1)
             non_vegetarian.append_row(self.answer2)
             non_vegetarian.append_row(self.answer3)
+            print("Results uploaded!")
         if diet == "yes" or diet == "y":
             vegetarian.append_row(self.answer1)
             vegetarian.append_row(self.answer2)
+            print("Results uploaded!")
 
 
 # function to calculate average responses
@@ -127,6 +137,7 @@ def main():
 
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
+    stats = SHEET.worksheet('Statistics')
 
 
     b = Big()
