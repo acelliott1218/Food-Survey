@@ -105,7 +105,6 @@ class Big():
         this method does not touch the statistics page, in the interests of keeping the code
         short
         """
-        # however, at least the code actually appends now. so that's progress
         print("Adding results to spreadsheet...")
         #the answers have to be re-stated for the code to work
         #it might not be necessary to keep the return statements or int conversions in survey() bc of this
@@ -123,7 +122,32 @@ class Big():
             print("Results uploaded!")
 
 
-# function to calculate average responses
+def stat_calculator(stats, a, b, c, diet):
+    """
+    Increases the number of responses 
+    Uses the number of responses to calculate the average for each column
+    Average score depends on if the user is a vegetarian or not
+    """
+    # figured out how to do all this from gspread documentation
+    # https://docs.gspread.org/en/v6.0.0/user-guide.html#finding-a-cell
+    stats.update_cell(a, b, c)
+    nveg_responses = int(stats.cell(14,2).value)
+    veg_responses = int(stats.cell(14,3).value)
+
+    if diet == 'yes' or diet == 'y':
+        tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
+        tnumbers_flat = sum(tnumbers_raw, [])
+        tnumbers_clean = [int(i) for i in tnumbers_flat]
+        tnumbers = sum(tnumbers_clean) / veg_responses
+        print(tnumbers)
+    else:
+        tnumbers_raw = SHEET.worksheet('Standard').get_all_values()[1:]
+        tnumbers_flat = sum(tnumbers_raw, [])
+        tnumbers_clean = [int(i) for i in tnumbers_flat]
+        tnumbers = sum(tnumbers_clean) / nveg_responses
+        print(tnumbers)
+
+
 
 # function to calculate most popular food
 
@@ -136,11 +160,23 @@ def main():
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
+    nveg_responses = int(stats.cell(14,2).value)
+    veg_responses = int(stats.cell(14,3).value)
+
+    #this allows the actual stat_calculator function to be smaller
+    # while doing the background work in (main)
+    if diet == 'yes' or diet == 'y':
+        stat_calculator(stats, 14, 3, veg_responses +1, diet)
+    else:
+        stat_calculator(stats, 14, 2, nveg_responses +1, diet)
 
 
     b = Big()
     b.survey(diet, name)
     b.appender(diet, vegetarian, non_vegetarian)
+
+
+
     
 
 if __name__ == "__main__":
