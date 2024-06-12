@@ -135,21 +135,32 @@ def stat_calculator(stats, a, b, c, diet):
     veg_responses = int(stats.cell(14,3).value)
 
     if diet == 'yes' or diet == 'y':
+        #I need to put in code to sum the relevant two numbers, creating a new 6 (or 9 in the lower example case)
+        #number list. After that it should be a simple matter of appending to the rows
         tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
         tnumbers_flat = sum(tnumbers_raw, [])
+        #credit to https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
         tnumbers_clean = [int(i) for i in tnumbers_flat]
-        tnumbers = sum(tnumbers_clean) / veg_responses
+        tnumbers = [i/veg_responses for i in tnumbers_clean]
+        #credit https://www.geeksforgeeks.org/divide-all-elements-of-a-list-by-a-number-in-python/
         print(tnumbers)
     else:
         tnumbers_raw = SHEET.worksheet('Standard').get_all_values()[1:]
         tnumbers_flat = sum(tnumbers_raw, [])
         tnumbers_clean = [int(i) for i in tnumbers_flat]
-        tnumbers = sum(tnumbers_clean) / nveg_responses
+        tnumbers = [i/veg_responses for i in tnumbers_clean]
         print(tnumbers)
 
 
 
 # function to calculate most popular food
+def most_popular():
+    """
+    Analyzes the statistics page after the averages are updated, and finds the
+    most popular food for each category (Fruits, Vegetables, and Meat)
+    as well as the most popular food overall
+    """
+    print('To be created')
 
 def main():
     info = talker("Welcome to the Food Survey! You will be asked your opinions on various food groups.\n")
