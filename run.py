@@ -26,100 +26,100 @@ def talker(words):
     """ 
     print(words)
 
-class Big():
-    """
-    This gargantuan class combines the survey logic AND the appending logic
-    while allowing easy access to the answer attributes across the class its self
-    """
-    def __init__(self):
-        self.answer1 = None
-        self.answer2 = None
-        self.answer3 = None
-    def survey(self, diet, name):
-        """
-        The main survey function, which will collect the data inputted by survey takers
-        Meat questions are reserved for non-vegetarians as to not skew the data
-        """
-        try:
-            talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
+# class Big():
+#     """
+#     This gargantuan class combines the survey logic AND the appending logic
+#     while allowing easy access to the answer attributes across the class its self
+#     """
+#     def __init__(self):
+#         self.answer1 = None
+#         self.answer2 = None
+#         self.answer3 = None
+#     def survey(self, diet, name):
+#         """
+#         The main survey function, which will collect the data inputted by survey takers
+#         Meat questions are reserved for non-vegetarians as to not skew the data
+#         """
+#         try:
+#             talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
             
-            question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
-            #cleaner1, cleaner2, and cleaner3 all serve to prepare the inputted data for int-conversion
-            cleaner1 = question1.split(",")
-            #iterates through the list provided from question1, without commas, and converts to integers for the final answer
-            self.answer1 = [int(i) for i in cleaner1]
-            # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
+#             question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
+#             #cleaner1, cleaner2, and cleaner3 all serve to prepare the inputted data for int-conversion
+#             cleaner1 = question1.split(",")
+#             #iterates through the list provided from question1, without commas, and converts to integers for the final answer
+#             self.answer1 = [int(i) for i in cleaner1]
+#             # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
             
-            if len(self.answer1) > 3:
-                raise ValueError("You put in too many numbers!")
-        except ValueError as e:
-            print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+#             if len(self.answer1) > 3:
+#                 raise ValueError("You put in too many numbers!")
+#         except ValueError as e:
+#             print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
         
-        try:
-            #this entire section works the exact same as the previous one
-            talker("Very good! Moving onto vegetables...")
+#         try:
+#             #this entire section works the exact same as the previous one
+#             talker("Very good! Moving onto vegetables...")
             
-            talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
+#             talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
             
-            talker("Tomatoes aren't technically fruits, but you know what we mean!")
+#             talker("Tomatoes aren't technically fruits, but you know what we mean!")
             
-            question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
+#             question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
             
-            cleaner2 = question2.split(",")
+#             cleaner2 = question2.split(",")
             
-            self.answer2 = [int(x) for x in cleaner2]
+#             self.answer2 = [int(x) for x in cleaner2]
             
-            if len(self.answer2) > 3:
-                raise ValueError("You put in too many numbers!")
-                    # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int 
-        except ValueError as e:
-                print(f"Error! {e} try again, and just numbers this time!")
+#             if len(self.answer2) > 3:
+#                 raise ValueError("You put in too many numbers!")
+#                     # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int 
+#         except ValueError as e:
+#                 print(f"Error! {e} try again, and just numbers this time!")
         
-        try: 
-            #section to separate data from non-vegetarians
-            if diet == "no" or diet == "n":
+#         try: 
+#             #section to separate data from non-vegetarians
+#             if diet == "no" or diet == "n":
 
-                talker(f"Very good! So, {name}, let's talk meat: what do you think about...")
+#                 talker(f"Very good! So, {name}, let's talk meat: what do you think about...")
                 
-                question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+#                 question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
                 
-                cleaner3 = question3.split(",")
+#                 cleaner3 = question3.split(",")
                 
-                self.answer3 = [int(x) for x in cleaner3]
+#                 self.answer3 = [int(x) for x in cleaner3]
                 
-                if len(self.answer2) > 3:
-                    raise ValueError("You put in too many numbers!")
+#                 if len(self.answer2) > 3:
+#                     raise ValueError("You put in too many numbers!")
             
-            elif diet == "yes" or diet == "y":
-                return self.answer1, self.answer2
-        # this exception is unfortunately not where you'd think it'd be!
-        except ValueError as e:
-            print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
-        if diet == "no" or diet == "n":
-            return self.answer1,self.answer2,self.answer3
+#             elif diet == "yes" or diet == "y":
+#                 return self.answer1, self.answer2
+#         # this exception is unfortunately not where you'd think it'd be!
+#         except ValueError as e:
+#             print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+#         if diet == "no" or diet == "n":
+#             return self.answer1,self.answer2,self.answer3
 
-    def appender(self, diet, vegetarian, non_vegetarian):
-        """
-        adds the relevant data from the survey to the vegetarian or non-vegetarian tabs
-        converts the answers from survey() to integers (again) so they can be appended
-        this method does not touch the statistics page, in the interests of keeping the code
-        short
-        """
-        print("Adding results to spreadsheet...")
-        #the answers have to be re-stated for the code to work
-        #it might not be necessary to keep the return statements or int conversions in survey() bc of this
-        self.answer1 = [int(i) for i in self.answer1]
-        self.answer2 = [int(i) for i in self.answer2]
+#     def appender(self, diet, vegetarian, non_vegetarian):
+#         """
+#         adds the relevant data from the survey to the vegetarian or non-vegetarian tabs
+#         converts the answers from survey() to integers (again) so they can be appended
+#         this method does not touch the statistics page, in the interests of keeping the code
+#         short
+#         """
+#         print("Adding results to spreadsheet...")
+#         #the answers have to be re-stated for the code to work
+#         #it might not be necessary to keep the return statements or int conversions in survey() bc of this
+#         self.answer1 = [int(i) for i in self.answer1]
+#         self.answer2 = [int(i) for i in self.answer2]
 
-        if diet == "no" or diet == "n":
-            self.answer3 = [int(i) for i in self.answer3]
-            answers = self.answer1 + self.answer2 + self.answer3
-            non_vegetarian.append_row(answers)
-            print("Results uploaded!")
-        if diet == "yes" or diet == "y":
-            answers = self.answer1 + self.answer2
-            vegetarian.append_row(answers)
-            print("Results uploaded!")
+#         if diet == "no" or diet == "n":
+#             self.answer3 = [int(i) for i in self.answer3]
+#             answers = self.answer1 + self.answer2 + self.answer3
+#             non_vegetarian.append_row(answers)
+#             print("Results uploaded!")
+#         if diet == "yes" or diet == "y":
+#             answers = self.answer1 + self.answer2
+#             vegetarian.append_row(answers)
+#             print("Results uploaded!")
 
 
 def stat_calculator(stats, a, b, c, diet):
@@ -141,15 +141,24 @@ def stat_calculator(stats, a, b, c, diet):
         tnumbers_flat = sum(tnumbers_raw, [])
         #credit to https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
         tnumbers_clean = [int(i) for i in tnumbers_flat]
-        tnumbers = [i/veg_responses for i in tnumbers_clean]
+        tnumbers_combine = [tnumbers_clean[i] + tnumbers_clean[i + 1] for i in range(0, len(tnumbers_clean), 2)]
+        #adds the items in tnumbers_clean together with each other, and ensures it targets neighboring numbers in pairs
+        #credits: 
+        # https://www.w3schools.com/python/gloss_python_for_range.asp
+        # Krishna Chaurasia https://stackoverflow.com/questions/66237156/summing-up-neighbors-numbers
+        tnumbers = [i/veg_responses for i in tnumbers_combine]
         #credit https://www.geeksforgeeks.org/divide-all-elements-of-a-list-by-a-number-in-python/
-        print(tnumbers)
+        stats.update('C2:C7',[[tnumbers]])
+        #from https://docs.gspread.org/en/v4.0.1/api.html
+
     else:
         tnumbers_raw = SHEET.worksheet('Standard').get_all_values()[1:]
         tnumbers_flat = sum(tnumbers_raw, [])
-        tnumbers_clean = [int(i) for i in tnumbers_flat]
+        tnumbers_clean = [int(i) for i in tnumbers_combine]
+        tnumbers_combine = [tnumbers_clean[i] + tnumbers_clean[i + 1] for i in range(0, len(tnumbers_clean), 2)]
         tnumbers = [i/veg_responses for i in tnumbers_clean]
-        print(tnumbers)
+        stats.update('B2:B10',[[tnumbers]])
+
 
 
 
@@ -174,6 +183,10 @@ def main():
     nveg_responses = int(stats.cell(14,2).value)
     veg_responses = int(stats.cell(14,3).value)
 
+    # b = Big()
+    # b.survey(diet, name)
+    # b.appender(diet, vegetarian, non_vegetarian)
+
     #this allows the actual stat_calculator function to be smaller
     # while doing the background work in (main)
     if diet == 'yes' or diet == 'y':
@@ -182,9 +195,7 @@ def main():
         stat_calculator(stats, 14, 2, nveg_responses +1, diet)
 
 
-    b = Big()
-    b.survey(diet, name)
-    b.appender(diet, vegetarian, non_vegetarian)
+
 
 
 
