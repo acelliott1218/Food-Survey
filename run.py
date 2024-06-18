@@ -135,22 +135,28 @@ def stat_calculator(stats, a, b, c, diet):
     veg_responses = int(stats.cell(14,3).value)
 
     if diet == 'yes' or diet == 'y':
-        #I need to put in code to sum the relevant two numbers, creating a new 6 (or 9 in the lower example case)
-        #number list. After that it should be a simple matter of appending to the rows
         tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
-        tnumbers_flat = sum(tnumbers_raw, [])
-        #credit to https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
-        tnumbers_clean = [int(i) for i in tnumbers_flat]
-        tnumbers_combine = [tnumbers_clean[i] + tnumbers_clean[i + 1] for i in range(0, len(tnumbers_clean), 2)]
-        #adds the items in tnumbers_clean together with each other, and ensures it targets neighboring numbers in pairs
-        #credits: 
-        # https://www.w3schools.com/python/gloss_python_for_range.asp
-        # Krishna Chaurasia https://stackoverflow.com/questions/66237156/summing-up-neighbors-numbers
-        tnumbers = [i/veg_responses for i in tnumbers_combine]
+
+        tnumbers_int = [[int(i) for i in j] for j in tnumbers_raw]
+        # credit: Max Shawabkeh
+        # https://stackoverflow.com/questions/2166577/casting-from-a-list-of-lists-of-strings-to-list-of-lists-of-ints-in-python
+
+        tnumbers_list = [0] * 6
+        #credit: ninjagecko
+        # https://stackoverflow.com/questions/10617045/how-to-create-a-fix-size-list-in-python
+
+        #connects the elements of each list to each other by their corresponding element
+        for inner_list in tnumbers_int:
+            tnumbers_list = [sum(i) for i in zip(tnumbers_list, inner_list)]
+            #this took a ton of trial and erroring, but this ended up being the key
+        
+        #gets the average response by dividing each element in tnumbers_list by the number of responses
+        tnumbers = [i/veg_responses for i in tnumbers_list]
         #credit https://www.geeksforgeeks.org/divide-all-elements-of-a-list-by-a-number-in-python/
+
+        #converts the list to a float
         tnumbers_float = [float(i) for i in tnumbers]
         # https://stackoverflow.com/questions/1614236/how-do-i-convert-all-of-the-items-in-a-list-to-floats
-        # print(tnumbers_combine)
         rows = [
             [tnumbers_float[0]],
             [tnumbers_float[1]],
@@ -166,13 +172,15 @@ def stat_calculator(stats, a, b, c, diet):
             ]
         )
         #credit: https://github.com/burnash/gspread/issues/792
-
     else:
+        #everything else in here works the same, just changed to make extra room for meat opinions
+        #uses values from the non-vegetarian worksheet, obviously
         tnumbers_raw = SHEET.worksheet('Standard').get_all_values()[1:]
-        tnumbers_flat = sum(tnumbers_raw, [])
-        tnumbers_clean = [int(i) for i in tnumbers_combine]
-        tnumbers_combine = [tnumbers_clean[i] + tnumbers_clean[i + 1] for i in range(0, len(tnumbers_clean), 2)]
-        tnumbers = [i/veg_responses for i in tnumbers_clean]
+        tnumbers_int = [[int(i) for i in j] for j in tnumbers_raw]
+        tnumbers_list = [0] * 9
+        for inner_list in tnumbers_int:
+            tnumbers_list = [sum(i) for i in zip(tnumbers_list, inner_list)]
+        tnumbers = [i/veg_responses for i in tnumbers_list]
         tnumbers_float = [float(i) for i in tnumbers]
         rows = [
             [tnumbers_float[0]],
@@ -213,9 +221,9 @@ def main():
     nveg_responses = int(stats.cell(14,2).value)
     veg_responses = int(stats.cell(14,3).value)
 
-    # b = Big()
-    # b.survey(diet, name)
-    # b.appender(diet, vegetarian, non_vegetarian)
+    b = Big()
+    b.survey(diet, name)
+    b.appender(diet, vegetarian, non_vegetarian)
 
     #this allows the actual stat_calculator function to be smaller
     # while doing the background work in (main)
