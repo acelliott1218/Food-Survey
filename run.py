@@ -40,63 +40,80 @@ class Big():
         The main survey function, which will collect the data inputted by survey takers
         Meat questions are reserved for non-vegetarians as to not skew the data
         """
-        try:
-            talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
-            
-            question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
-            #cleaner1, cleaner2, and cleaner3 all serve to prepare the inputted data for int-conversion
-            cleaner1 = question1.split(",")
-            #iterates through the list provided from question1, without commas, and converts to integers for the final answer
-            self.answer1 = [int(i) for i in cleaner1]
-            # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
-            
-            if len(self.answer1) > 3:
-                raise ValueError("You put in too many numbers!")
-        except ValueError as e:
-            print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
-        
-        try:
-            #this entire section works the exact same as the previous one
-            talker("Very good! Moving onto vegetables...")
-            
-            talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
-            
-            talker("Tomatoes aren't technically fruits, but you know what we mean!")
-            
-            question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
-            
-            cleaner2 = question2.split(",")
-            
-            self.answer2 = [int(x) for x in cleaner2]
-            
-            if len(self.answer2) > 3:
-                raise ValueError("You put in too many numbers!")
-                    # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int 
-        except ValueError as e:
-                print(f"Error! {e} try again, and just numbers this time!")
-        
-        try: 
-            #section to separate data from non-vegetarians
-            if diet == "no" or diet == "n":
+        while True:
+            try:
+                talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
+                    
+                question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
+                #cleaner1, cleaner2, and cleaner3 all serve to prepare the inputted data for int-conversion
+                cleaner1 = question1.split(",")
+                #iterates through the list provided from question1, without commas, and converts to integers for the final answer
+                self.answer1 = [int(i) for i in cleaner1]
+                # refresher from senderle https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
+                    
+                if len(self.answer1) != 3:
+                    raise ValueError("You should only put in 3 numbers!")
+                for i in self.answer1:
+                    if i > 10 or i < 1:
+                        raise ValueError("Please keep your answer between 1 and 10!")
+                    if not (int or float):
+                        raise ValueError("Please only put in numbers!")
+                break
+            except ValueError as e:
+                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    continue
 
-                talker(f"Very good! So, {name}, let's talk meat: what do you think about...")
+        while True:
+            try:
+                #this entire section works the exact same as the previous one
                 
-                question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+                talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
                 
-                cleaner3 = question3.split(",")
+                talker("Tomatoes aren't technically fruits, but you know what we mean!")
                 
-                self.answer3 = [int(x) for x in cleaner3]
+                question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
+                
+                cleaner2 = question2.split(",")
+                
+                self.answer2 = [int(x) for x in cleaner2]
                 
                 if len(self.answer2) > 3:
                     raise ValueError("You put in too many numbers!")
-            
-            elif diet == "yes" or diet == "y":
+                for i in self.answer2:
+                    if i > 10 or i < 1:
+                        raise ValueError("Please keep your answer between 1 and 10!")
+                    if not (int or float):
+                        raise ValueError("Please only put in numbers!")
+                break
+            except ValueError as e:
+                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    continue
+        while True:
+            if diet == "yes" or diet == "y":
                 return self.answer1, self.answer2
-        # this exception is unfortunately not where you'd think it'd be!
-        except ValueError as e:
-            print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
-        if diet == "no" or diet == "n":
-            return self.answer1,self.answer2,self.answer3
+            else:
+                try: 
+                    #section to separate data from non-vegetarians
+                    if diet == "no" or diet == "n":
+                        question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+                        
+                        cleaner3 = question3.split(",")
+                        
+                        self.answer3 = [int(x) for x in cleaner3]
+                        
+                        if len(self.answer3) != 3:
+                            raise ValueError("You should only put in 3 numbers!")
+                        for i in self.answer3:
+                            if i > 10 or i < 1:
+                                raise ValueError("Please keep your answer between 1 and 10!")
+                            if not (int or float):
+                                raise ValueError("Please only put in numbers!")
+                        break
+                except ValueError as e:
+                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    continue
+            if diet == "no" or "n":
+                return self.answer1, self.answer2, self.answer3
 
     def appender(self, diet, vegetarian, non_vegetarian):
         """
@@ -154,8 +171,8 @@ def stat_calculator(stats, a, b, c, diet):
         tnumbers = [i/veg_responses for i in tnumbers_list]
         #credit https://www.geeksforgeeks.org/divide-all-elements-of-a-list-by-a-number-in-python/
 
-        #converts the list to a float
-        tnumbers_float = [float(i) for i in tnumbers]
+        #converts the list to a list of floats to 2 decimal places
+        tnumbers_float = [round(float(i), 2) for i in tnumbers]
         # https://stackoverflow.com/questions/1614236/how-do-i-convert-all-of-the-items-in-a-list-to-floats
         rows = [
             [tnumbers_float[0]],
