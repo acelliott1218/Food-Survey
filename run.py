@@ -15,8 +15,10 @@ SHEET = GSPREAD_CLIENT.open('Food Survey')
 
 class Big():
     """
-    This gargantuan class combines the survey logic AND the appending logic
-    while allowing easy access to the answer attributes across the class its self
+    This gargantuan class combines the survey
+    logic AND the appending logic
+    while allowing easy access to the
+    answer attributes across the class its self
     """
 
     def __init__(self):
@@ -26,19 +28,23 @@ class Big():
 
     def survey(self, diet, name):
         """
-        The main survey function, which will collect the data inputted by survey takers
-        Meat questions are reserved for non-vegetarians as to not skew the data
+        The main survey function, which will
+        collect the data inputted by survey takers
+        Meat questions are reserved for
+        non-vegetarians as to not skew the data
         """
         while True:
             try:
                 print("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
                 question1 = input(
-                    "Please separate your answers by commas, for example \n 5,3,10\n")
+                    "Please separate your answers by commas,"
+                    "for example \n 5,3,10\n")
                 # cleaner1, cleaner2, and cleaner3 all serve
                 #  to prepare the inputted data for int-conversion
                 cleaner1 = question1.split(",")
-                # iterates through the list provided from question1, without commas,
-                #  and converts to integers for the final answer
+                # iterates through the list
+                # provided from question1, without commas,
+                # and converts to integers for the final answer
                 self.answer1 = [int(i) for i in cleaner1]
                 # refresher from senderle:
                 # https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
@@ -53,15 +59,23 @@ class Big():
                 break
             except ValueError as e:
                 print(
-                    f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
+                    f"Error! {e} Try again,"
+                    "just numbers this time, and 3 of 'em!")
                 continue
         while True:
             try:
                 # this entire section works the exact same as the previous one
-                print("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
-                print("Tomatoes aren't technically fruits, but you know what we mean!")
+                print(
+                    "On a scale of 1-10, rate:"
+                    "Cucumbers, tomatoes, and potatoes."
+                    )
+                print(
+                    "Tomatoes aren't technically fruits,"
+                    "but you know what we mean!"
+                    )
                 question2 = input(
-                    "Please separate your answers by commas, for example:\n5,3,10\n")
+                    "Please separate your answers by commas,"
+                    "for example:\n5,3,10\n")
                 cleaner2 = question2.split(",")
                 self.answer2 = [int(x) for x in cleaner2]
                 if len(self.answer2) > 3:
@@ -75,14 +89,17 @@ class Big():
                 break
             except ValueError as e:
                 print(
-                    f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
+                    f"Error! {e} Try again,"
+                    "just numbers this time, and 3 of 'em!")
                 continue
         while True:
             try:
                 # section to separate data from non-vegetarians
                 if diet in ['no', 'n']:
                     question3 = input(
-                        "Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+                        "Beef, chicken, and pork? Please separate your"
+                        "answers by commas, for example \n 5,3,10\n"
+                        )
                     cleaner3 = question3.split(",")
                     self.answer3 = [int(x) for x in cleaner3]
                     if len(self.answer3) != 3:
@@ -97,16 +114,20 @@ class Big():
                     break
             except ValueError as e:
                 print(
-                    f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
+                    f"Error! {e} Try again, just numbers this time,"
+                    "and 3 of 'em!")
                 continue
             if diet == "no" or "n":
                 return self.answer1, self.answer2, self.answer3
 
     def appender(self, diet, vegetarian, non_vegetarian):
         """
-        adds the relevant data from the survey to the vegetarian or non-vegetarian tabs
-        converts the answers from survey() to integers (again) so they can be appended
-        this method does not touch the statistics page, in the interests of keeping the code
+        adds the relevant data from the survey
+        to the vegetarian or non-vegetarian tabs
+        converts the answers from survey()
+        to integers (again) so they can be appended
+        this method does not touch the statistics page,
+        in the interests of keeping the code
         short
         """
         print("Adding results to spreadsheet...")
@@ -126,7 +147,7 @@ class Big():
 
 def stat_calculator(stats, a, b, c, diet):
     """
-    Increases the number of responses 
+    Increases the number of responses
     Uses the number of responses to calculate the average for each column
     Average score depends on if the user is a vegetarian or not
     """
@@ -140,22 +161,27 @@ def stat_calculator(stats, a, b, c, diet):
         tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
         tnumbers_int = [[int(i) for i in j] for j in tnumbers_raw]
         # credit: Max Shawabkeh
-        # https://stackoverflow.com/questions/2166577/casting-from-a-list-of-lists-of-strings-to-list-of-lists-of-ints-in-python
+        # https://stackoverflow.com/questions/2166577/
+        # casting-from-a-list-of-lists-of-strings-to-list
+        # -of-lists-of-ints-in-python
         tnumbers_list = [0] * 6
         # credit: ninjagecko
-        # https://stackoverflow.com/questions/10617045/how-to-create-a-fix-size-list-in-python
-        # connects the elements of each list to each other by their corresponding element
+        # https://stackoverflow.com/questions/10617045/
+        # how-to-create-a-fix-size-list-in-python
+        # connects the elements of each list to each other by
+        # their corresponding element
         for inner_list in tnumbers_int:
             tnumbers_list = [sum(i) for i in zip(tnumbers_list, inner_list)]
-            # this took a ton of trial and erroring, but this ended up being the key
+        tnumbers = [i/veg_responses for i in tnumbers_list]
         # gets the average response by dividing
         # each element in tnumbers_list by the number of responses
-        tnumbers = [i/veg_responses for i in tnumbers_list]
-        # credit https://www.geeksforgeeks.org/divide-all-elements-of-a-list-by-a-number-in-python/
+        # credit https://www.geeksforgeeks.org/
+        # divide-all-elements-of-a-list-by-a-number-in-python/
 
         # converts the list to a list of floats to 2 decimal places
         tnumbers_float = [round(float(i), 2) for i in tnumbers]
-        # https://stackoverflow.com/questions/1614236/how-do-i-convert-all-of-the-items-in-a-list-to-floats
+        # https://stackoverflow.com/questions/1614236/
+        # how-do-i-convert-all-of-the-items-in-a-list-to-floats
         rows = [
             [tnumbers_float[0]],
             [tnumbers_float[1]],
@@ -171,7 +197,8 @@ def stat_calculator(stats, a, b, c, diet):
         )
         # credit: https://github.com/burnash/gspread/issues/792
     else:
-        # everything else in here works the same, just changed to make extra room for meat opinions
+        # everything else in here works the same,
+        # just changed to make extra room for meat opinions
         # uses values from the non-vegetarian worksheet, obviously
         tnumbers_raw = SHEET.worksheet('Standard').get_all_values()[1:]
         tnumbers_int = [[int(i) for i in j] for j in tnumbers_raw]
@@ -214,7 +241,8 @@ def most_popular(stats, diet):
         # structure from:
         # https://www.geeksforgeeks.org/python-dictionary-comprehension/
         favorite = max(dct, key=dct.get)
-        # gets the item in dct with the highest value, meaning it's the most popular
+        # gets the item in dct with the highest value,
+        # meaning it's the most popular
         # refresh from A. Coady
         # https://stackoverflow.com/questions/268272/getting-key-with-maximum-value-in-dictionary
         # adds the favorite item to the relevant cell
@@ -239,7 +267,8 @@ def main():
     """
     Runs all program functions
     """
-    print("Welcome to the Food Survey! You will be asked your opinions on various food groups.\n")
+    print("Welcome to the Food Survey! You will be asked your"
+          "opinions on various food groups.\n")
     name = input("What is your name?\n").title()
     # code to restrict this to strings at certain character limits
     while True:  # this isn't in try/except form for simplicity's sake
@@ -248,9 +277,11 @@ def main():
         if diet in ['yes', 'y', 'no', 'n']:
             break
         else:
-            print('Oops! You can only answer yes or no to this question, try again!')
+            print("Oops! You can only answer yes or"
+                  "no to this question, try again!")
 
-    print(f'Welcome {name}! Since you answered "{diet}", your survey will be tailored with this in mind!')
+    print(f'Welcome {name}! Since you answered "{diet}",'
+          'your survey will be tailored with this in mind!')
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
