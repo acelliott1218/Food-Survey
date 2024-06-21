@@ -218,13 +218,29 @@ def stat_calculator(stats, a, b, c, diet):
         )
 
 
-def most_popular():
+def most_popular(stats, diet):
     """
     Analyzes the statistics page after the averages are updated, and finds the
     most popular food for each category (Fruits, Vegetables, and Meat)
     as well as the most popular food overall
     """
-    print('To be created')
+    print("Thank you for completing the survey!")
+    if diet == "yes" or diet == "y":
+        print("Here are the average scores for vegetarians")
+        numbers = stats.get('C2:C7')
+        names = stats.get('A2:A7')
+        dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)}
+        #structure from:
+        # https://www.geeksforgeeks.org/python-dictionary-comprehension/
+        print(dct)
+    elif diet == "no" or diet == "n":
+        print("Here are the average scores for non-vegetarians")
+        numbers = stats.get('B2:B10')
+        names = stats.get('A2:A10')
+        dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)}
+        print(dct)
+
+
 
 def main():
     info = talker("Welcome to the Food Survey! You will be asked your opinions on various food groups.\n")
@@ -238,16 +254,17 @@ def main():
     nveg_responses = int(stats.cell(14,2).value)
     veg_responses = int(stats.cell(14,3).value)
 
-    b = Big()
-    b.survey(diet, name)
-    b.appender(diet, vegetarian, non_vegetarian)
+    # b = Big()
+    # b.survey(diet, name)
+    # b.appender(diet, vegetarian, non_vegetarian)
 
-    #this allows the actual stat_calculator function to be smaller
-    # while doing the background work in (main)
-    if diet == 'yes' or diet == 'y':
-        stat_calculator(stats, 14, 3, veg_responses +1, diet)
-    else:
-        stat_calculator(stats, 14, 2, nveg_responses +1, diet)
+    # #this allows the actual stat_calculator function to be smaller
+    # # while doing the background work in (main)
+    # if diet == 'yes' or diet == 'y':
+    #     stat_calculator(stats, 14, 3, veg_responses +1, diet)
+    # else:
+    #     stat_calculator(stats, 14, 2, nveg_responses +1, diet)
+    most_popular(stats, diet)
 
 
 
