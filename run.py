@@ -78,30 +78,27 @@ class Big():
                     f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
                 continue
         while True:
-            if diet in ['yes', 'y']:
-                return self.answer1, self.answer2
-            else:
-                try:
-                    # section to separate data from non-vegetarians
-                    if diet in ['no', 'n']:
-                        question3 = input(
-                            "Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
-                        cleaner3 = question3.split(",")
-                        self.answer3 = [int(x) for x in cleaner3]
-                        if len(self.answer3) != 3:
+            try:
+                # section to separate data from non-vegetarians
+                if diet in ['no', 'n']:
+                    question3 = input(
+                        "Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+                    cleaner3 = question3.split(",")
+                    self.answer3 = [int(x) for x in cleaner3]
+                    if len(self.answer3) != 3:
+                        raise ValueError(
+                            "You should only put in 3 numbers!")
+                    for i in self.answer3:
+                        if i > 10 or i < 1:
                             raise ValueError(
-                                "You should only put in 3 numbers!")
-                        for i in self.answer3:
-                            if i > 10 or i < 1:
-                                raise ValueError(
-                                    "Please keep your answer between 1 and 10!")
-                            if not (int or float):
-                                raise ValueError("Please only put in numbers!")
-                        break
-                except ValueError as e:
-                    print(
-                        f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
-                    continue
+                                "Please keep your answer between 1 and 10!")
+                        if not (int or float):
+                            raise ValueError("Please only put in numbers!")
+                    break
+            except ValueError as e:
+                print(
+                    f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
+                continue
             if diet == "no" or "n":
                 return self.answer1, self.answer2, self.answer3
 
