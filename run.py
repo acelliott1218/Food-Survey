@@ -253,8 +253,7 @@ def main():
         else:
             print('Oops! You can only answer yes or no to this question, try again!')
 
-    print(f'Welcome {name}! Since you answered "{
-          diet}", your survey will be tailored with this in mind!')
+    print(f'Welcome {name}! Since you answered "{diet}", your survey will be tailored with this in mind!')
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
