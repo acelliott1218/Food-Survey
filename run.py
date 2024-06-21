@@ -13,18 +13,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Food Survey')
 
 
-def inputer(prompt):
-    """
-    easy function to call for feedback
-    """ 
-    return input(prompt)
 
-
-def talker(words):
-    """
-    easy function to communicate with survey-takers
-    """ 
-    print(words)
 
 class Big():
     """
@@ -42,9 +31,9 @@ class Big():
         """
         while True:
             try:
-                talker("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
+                print("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
                     
-                question1 = inputer("Please separate your answers by commas, for example \n 5,3,10\n")
+                question1 = input("Please separate your answers by commas, for example \n 5,3,10\n")
                 #cleaner1, cleaner2, and cleaner3 all serve to prepare the inputted data for int-conversion
                 cleaner1 = question1.split(",")
                 #iterates through the list provided from question1, without commas, and converts to integers for the final answer
@@ -60,18 +49,18 @@ class Big():
                         raise ValueError("Please only put in numbers!")
                 break
             except ValueError as e:
-                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    print(f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
                     continue
 
         while True:
             try:
                 #this entire section works the exact same as the previous one
                 
-                talker("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
+                print("On a scale of 1-10, rate: Cucumbers, tomatoes, and potatoes.")
                 
-                talker("Tomatoes aren't technically fruits, but you know what we mean!")
+                print("Tomatoes aren't technically fruits, but you know what we mean!")
                 
-                question2 = inputer("Please separate your answers by commas, for example:\n5,3,10\n")
+                question2 = input("Please separate your answers by commas, for example:\n5,3,10\n")
                 
                 cleaner2 = question2.split(",")
                 
@@ -86,16 +75,16 @@ class Big():
                         raise ValueError("Please only put in numbers!")
                 break
             except ValueError as e:
-                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    print(f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
                     continue
         while True:
-            if diet == "yes" or diet == "y":
+            if diet in ['yes', 'y']:
                 return self.answer1, self.answer2
             else:
                 try: 
                     #section to separate data from non-vegetarians
-                    if diet == "no" or diet == "n":
-                        question3 = inputer("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
+                    if diet in ['no', 'n']:
+                        question3 = input("Beef, chicken, and pork? Please separate your answers by commas, for example \n 5,3,10\n")
                         
                         cleaner3 = question3.split(",")
                         
@@ -110,7 +99,7 @@ class Big():
                                 raise ValueError("Please only put in numbers!")
                         break
                 except ValueError as e:
-                    print(f"Error! {e} try again, just numbers this time, and 3 of 'em!")
+                    print(f"Error! {e} Try again, just numbers this time, and 3 of 'em!")
                     continue
             if diet == "no" or "n":
                 return self.answer1, self.answer2, self.answer3
@@ -128,12 +117,12 @@ class Big():
         self.answer1 = [int(i) for i in self.answer1]
         self.answer2 = [int(i) for i in self.answer2]
 
-        if diet == "no" or diet == "n":
+        if diet in ['no', 'n']:
             self.answer3 = [int(i) for i in self.answer3]
             answers = self.answer1 + self.answer2 + self.answer3
             non_vegetarian.append_row(answers)
             print("Results uploaded!")
-        if diet == "yes" or diet == "y":
+        if diet in ['yes', 'y']:
             answers = self.answer1 + self.answer2
             vegetarian.append_row(answers)
             print("Results uploaded!")
@@ -148,10 +137,10 @@ def stat_calculator(stats, a, b, c, diet):
     # figured out how to do all this from gspread documentation
     # https://docs.gspread.org/en/v6.0.0/user-guide.html#finding-a-cell
     stats.update_cell(a, b, c)
-    nveg_responses = int(stats.cell(14,2).value)
-    veg_responses = int(stats.cell(14,3).value)
+    nveg_responses = int(stats.cell(12,2).value)
+    veg_responses = int(stats.cell(12,3).value)
 
-    if diet == 'yes' or diet == 'y':
+    if diet in ['yes', 'y']:
         tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
 
         tnumbers_int = [[int(i) for i in j] for j in tnumbers_raw]
@@ -224,7 +213,7 @@ def most_popular(stats, diet):
     most popular food overall
     """
     print("Thank you for completing the survey!")
-    if diet == "yes" or diet == "y":
+    if diet in ['yes', 'y']:
         print("Here are the average scores for vegetarians")
         numbers = stats.get('C2:C7') #gets the values of the relevant columns
         names = stats.get('A2:A7') #gets the names of the relevant columns
@@ -237,9 +226,9 @@ def most_popular(stats, diet):
         # https://stackoverflow.com/questions/268272/getting-key-with-maximum-value-in-dictionary
         print(dct)
         print(f'The most popular food is...\n{favorite}!')
-    elif diet == "no" or diet == "n":
+    elif diet in ['no', 'n']:
         #all of this works the same way, just targets different columns
-        print("Here are the average scores for non-vegetarians")
+        print("Here are the average scores for non-vegetarians:")
         numbers = stats.get('B2:B10')
         names = stats.get('A2:A10')
         dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)}
@@ -250,11 +239,17 @@ def most_popular(stats, diet):
 
 
 def main():
-    info = talker("Welcome to the Food Survey! You will be asked your opinions on various food groups.\n")
-    name = inputer("What is your name?\n").title() #code to restrict this to strings at certain character limits
-    diet = inputer("Are you vegetarian? Please enter 'yes' or 'no'.\n").lower()
-    review = talker(f'Welcome {name}! Since you answered "{diet}", your survey will be tailored with this in mind!')
-
+    info = print("Welcome to the Food Survey! You will be asked your opinions on various food groups.\n")
+    name = input("What is your name?\n").title() #code to restrict this to strings at certain character limits
+    
+    while True: #this isn't in try/except form for simplicity's sake
+        diet = input("Are you vegetarian? Please enter 'yes' or 'no'.\n").lower()
+        if diet in ['yes', 'y', 'no', 'n']:
+            break
+        else:
+            print('Oops! You can only answer yes or no to this question, try again!')
+    
+    review = print(f'Welcome {name}! Since you answered "{diet}", your survey will be tailored with this in mind!')
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
@@ -267,10 +262,10 @@ def main():
 
     #this allows the actual stat_calculator function to be smaller
     # while doing the background work in (main)
-    if diet == 'yes' or diet == 'y':
-        stat_calculator(stats, 14, 3, veg_responses +1, diet)
+    if diet in ['yes', 'y']:
+        stat_calculator(stats, 12, 3, veg_responses +1, diet)
     else:
-        stat_calculator(stats, 14, 2, nveg_responses +1, diet)
+        stat_calculator(stats, 12, 2, nveg_responses +1, diet)
     most_popular(stats, diet)
 
 
