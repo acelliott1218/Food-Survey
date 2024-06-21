@@ -221,24 +221,31 @@ def stat_calculator(stats, a, b, c, diet):
 def most_popular(stats, diet):
     """
     Analyzes the statistics page after the averages are updated, and finds the
-    most popular food for each category (Fruits, Vegetables, and Meat)
-    as well as the most popular food overall
+    most popular food overall
     """
     print("Thank you for completing the survey!")
     if diet == "yes" or diet == "y":
         print("Here are the average scores for vegetarians")
-        numbers = stats.get('C2:C7')
-        names = stats.get('A2:A7')
-        dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)}
+        numbers = stats.get('C2:C7') #gets the values of the relevant columns
+        names = stats.get('A2:A7') #gets the names of the relevant columns
+        dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)} 
+        #creates a dictionary by alternating between names and numbers
         #structure from:
         # https://www.geeksforgeeks.org/python-dictionary-comprehension/
+        favorite = max(dct, key=dct.get) #gets the item in dct with the highest value, meaning it's the most popular
+        # refresh from A. Coady
+        # https://stackoverflow.com/questions/268272/getting-key-with-maximum-value-in-dictionary
         print(dct)
+        print(f'The most popular food is...\n{favorite}!')
     elif diet == "no" or diet == "n":
+        #all of this works the same way, just targets different columns
         print("Here are the average scores for non-vegetarians")
         numbers = stats.get('B2:B10')
         names = stats.get('A2:A10')
         dct = {name[0]: float(number[0]) for name, number in zip(names, numbers)}
+        favorite = max(dct, key=dct.get)
         print(dct)
+        print(f'The most popular food is...\n{favorite}!')
 
 
 
@@ -251,19 +258,19 @@ def main():
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
-    nveg_responses = int(stats.cell(14,2).value)
-    veg_responses = int(stats.cell(14,3).value)
+    nveg_responses = int(stats.cell(12,2).value)
+    veg_responses = int(stats.cell(12,3).value)
 
-    # b = Big()
-    # b.survey(diet, name)
-    # b.appender(diet, vegetarian, non_vegetarian)
+    b = Big()
+    b.survey(diet, name)
+    b.appender(diet, vegetarian, non_vegetarian)
 
-    # #this allows the actual stat_calculator function to be smaller
-    # # while doing the background work in (main)
-    # if diet == 'yes' or diet == 'y':
-    #     stat_calculator(stats, 14, 3, veg_responses +1, diet)
-    # else:
-    #     stat_calculator(stats, 14, 2, nveg_responses +1, diet)
+    #this allows the actual stat_calculator function to be smaller
+    # while doing the background work in (main)
+    if diet == 'yes' or diet == 'y':
+        stat_calculator(stats, 14, 3, veg_responses +1, diet)
+    else:
+        stat_calculator(stats, 14, 2, nveg_responses +1, diet)
     most_popular(stats, diet)
 
 
