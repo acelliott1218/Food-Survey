@@ -377,11 +377,11 @@ My Food Survey project was deployed using the Gitpod IDE, using Git and GitHub f
 
 ### **Project Idea**
 
-The inspiration for this project originated from my personal experience as a "hobby day trader." The repetitive task of manually filling out Excel sheets after each trade became cumbersome and frustrating. Many online trading journals also came with monthly subscription fees ranging from $20 to $50. In the future, I plan to expand this project by developing an automated trading journal connected to brokerage APIs. However, for the time being, this manual input stock trading journal serves as a cost-effective and efficient solution.
+The project was taken from the Project 3 ideas page in the FullstackDev program from CodeInstitute. Food was decided as the subject, since everyone eats.
 
 ### **Content**
 
-The content of this tool was created by me, aka. [Acelliott1218](https://github.com/acelliott1218).
+The content of this tool was created by me, aka. [Acelliott1218](https://github.com/acelliott1218), along with snippets credited in the comments of the run.py file.
 
 The Python code provided was made with the knowledge gained through the CodeInstitute Full Stack Developer course.
 
