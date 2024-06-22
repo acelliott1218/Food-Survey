@@ -1,4 +1,4 @@
-# **Stock Trading Journal**
+# **Food Survey**
 
 Live Website: [Food Survey](https://elliott-food-survey-c4688ed90296.herokuapp.com)
 
@@ -12,9 +12,9 @@ Data from vegetarians is separated for three reasons:
 
 3) To see if people who eat meat prefer it to other types of food, eg, if there exists a preference for pork over, for example, potatoes.
 
-![lucid chart](media/readme-images/lucid-chart.jpg)
+![lucid chart](media/readme-images/Python_Project_Flow_50.jpeg)
 
-***
+
 
 ## **Project Goals**
 
@@ -82,18 +82,23 @@ The survey will tell you the current most popular food (out of the six or nine, 
 + Users will not need to do anything for their data to be put into the correct column, other than the initial diet question.
 
 **Starting Screen**  
-![starting screen](media/readme-images/welcome-screen.jpg)
+![starting screen](media/readme-images/start.jpg)
 
-**Input Stock Trading Data**  
-![input stock trading data](media/readme-images/trading-journal-input.jpg)
+**Input Name**  
+![input user's name](media/readme-images/name.jpg)
 
-**Display Journal Entries**  
-![display journal entries](media/readme-images/trading-journal.jpg)
+**Input Diet**  
+![input user's diet](media/readme-images/diet.jpg)
 
-**Display Trading Statistics**  
-![display trading statistics](media/readme-images/trading-statistics.jpg)
+**Input Survey Answers**  
+![display trading statistics](media/readme-images/survey.jpg)
 
-### **Trading Journal Input**
+**Display Diet Averages and Favorite**
+![display diet averages](media/readme-images/averages.jpg)
+
+
+
+### **Survey Input**
 
 + Inputs can only be made with the keyboard.
 + Input is validated wherever an input can be made, so that it fits the google sheet.
@@ -102,41 +107,34 @@ The survey will tell you the current most popular food (out of the six or nine, 
 **Input for diet**
 + Much of the program depends on a "yes" or "no" answer to the diet question. A "y" or "n" response will also be accepted.
 
-![enter date option](media/readme-images/trading-journal-input.jpg)
+![diet input](media/readme-images/diet2.jpg)
 
 + When a choice is made, both the content of the survey and where the diet is stored are decided.
 
-![enter date automatically](media/readme-images/enter-date-automatically.jpg)
-
-
 + If a user puts in anything other than "yes"/"y" or "no"/"n", they are prompted to try the question again. This ensures the program not only runs correctly, but that the data is correctly sorted.
 
-![date correct input](media/readme-images/enter-date-manually.jpg)
+![diet incorrect input](media/readme-images/diet-wrong.jpg)
 
 **Input for Rating Foods**
 + After the diet field has been satisfied, users are prompted to rate three foods from a value of 1-10.
 
-![stock ticker correct input](media/readme-images/enter-stock-ticker.jpg)
-
 + If the user puts in anything other than a number between 1-10, the question is repeated.
+
+![survey incorrect input](media/readme-images/survey-wrong.jpg)
 
 
 **All user inputs are valid**
 + If the survey's questions are answered correctly, the data is pushed to either the "Standard" or "Vegetarian" tabs in Google Sheets.
 
 
-![entry is correct](media/readme-images/enter-data-is-correct.jpg)
+![answer is valid](media/readme-images/survey-correct.jpg)
 
-+ The number of responses is also increases by one -- this is done after validation to ensure incomplete responses aren't counted.
++ The number of responses is also increased by one -- this is done after validation to ensure incomplete responses aren't counted.
 
 **Data is incorrect**
-+ If the diet receives an incorrect value, eg, anything other than "y"/"yes" or "n"/"no", they are made to input another response.
-
-![diet value is invalid](media/readme-images/enter-data-is-incorrect.jpg)
++ If the diet receives an incorrect value, eg, anything other than "y"/"yes" or "n"/"no", they are made to input another response. See previous error images as an example.
 
 + If the user inputs a number not between 1-10, a number with a decimal space, or a letter, they are asked the question again.
-
-![answer value is invalid](media/readme-images/answer-is-correct.jpg)
 
 
 ## **Features**
@@ -235,19 +233,17 @@ Each input field within the program is safeguarded against errors through one of
 
 + **Restricting input to the diet question to only "yes"/"y" or "no"/"n".**
 
-![screenshot diet validation](media/readme-images/allowed-keys.jpg)
+![diet validation](media/readme-images/diet-wrong.jpg)
 
 
 + **Validate Ratings**  
-    - Every rating must be 3 whole numbers, between 1-10, and separated by commas.
-
-![validate ratings](media/readme-images/validate-date.jpg)
+    - Every rating must be 3 whole numbers, between 1-10, and separated by commas. See above input examples.
 
 
 + **Validate Numbers with Decimals**  
     - As depicted in the image below, only numerical inputs with no decimals are accepted.
 
-![validate numbers without decimals](media/readme-images/validate-price.jpg)
+![validate numbers without decimals](media/readme-images/decimal-wrong.jpg)
 
 ### **Input Validation Testing**
 Validation is obviously crucial for any programming project, and in this case, almost everything hinges on a correct input to the diet question -- otherwise, the intended sorting will not happen, and users may not be asked the meat question at all.
@@ -265,15 +261,13 @@ Testing has been conducted the following way:
 | Words to ratings   | Yes   | no     | No       | no           | Y            | y | N | n |
 |                    |       |        |          |              |              |   |   |   |
 
-As evident from the testing table below, various inputs have undergone thorough examination and validation.
+Thus, the project is ready!
 
-Correct Input - Input is validated and confirmed with a green message. The program proceeds to the next stage.
+Correct Input - The program moves along accordingly
 
-![correct message](media/readme-images/correct-dates-message.jpg)
+![correct message](media/readme-images/survey-correct.jpg)
 
-Incorrect Input = The input is declined and a decline message in red is displayed. The program reacts and repeats the last input sequence until valid input is provided.
-
-![incorrect messages](media/readme-images/incorrect-dates-message.jpg)
+Incorrect Input = The input is declined and a decline message in red is displayed. The program reacts and repeats the last input sequence until valid input is provided. See prior images for an example.
 
 **Testing Results**
 | Test                                              | Expected  | Result    | Intended Use |
@@ -297,7 +291,7 @@ All Python files have been inspected using a pep8 linter, and no errors have bee
 
 ### **Unresolved Errors, Issues and Bugs**
 
-To date, there are no known bugs or issues with this application.
+No issues known so far
 
 ***
 
