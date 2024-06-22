@@ -29,7 +29,7 @@ class Big():
         self.answer2 = None
         self.answer3 = None
 
-    def survey(self, diet, name):
+    def survey(self, diet):
         """
         The main survey function, which will
         collect the data inputted by survey takers
@@ -135,9 +135,6 @@ class Big():
                       f"Error! {e} Try again, just numbers this time,"
                       " and 3 of 'em!")
                 continue
-            if diet == "no" or "n":
-                return self.answer1, self.answer2, self.answer3
-
     def appender(self, diet, vegetarian, non_vegetarian):
         """
         adds the relevant data from the survey
@@ -315,7 +312,7 @@ def main():
     veg_responses = int(stats.cell(12, 3).value)
 
     b = Big()
-    b.survey(diet, name)
+    b.survey(diet)
     b.appender(diet, vegetarian, non_vegetarian)
 
     # this allows the actual stat_calculator function to be smaller
