@@ -1,5 +1,8 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from colorama import Fore, init
+
+init(autoreset=True)
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -35,10 +38,12 @@ class Big():
         """
         while True:
             try:
-                print("On a scale of 1-10, rate: Apples, Bananas, and Mangoes")
+                print(Fore.WHITE +
+                      "On a scale of 1-10, rate:\n" +
+                      Fore.YELLOW + "Apples, Bananas, and Mangoes")
                 question1 = input(
-                    "Please separate your answers by commas,"
-                    "for example \n 5,3,10\n")
+                    "Please separate your answers by commas," +
+                    Fore.YELLOW + "\nFor example: 5,3,10\n")
                 # cleaner1, cleaner2, and cleaner3 all serve
                 #  to prepare the inputted data for int-conversion
                 cleaner1 = question1.split(",")
@@ -49,73 +54,86 @@ class Big():
                 # refresher from senderle:
                 # https://stackoverflow.com/questions/6009589/how-to-test-if-every-item-in-a-list-of-type-int
                 if len(self.answer1) != 3:
-                    raise ValueError("You should only put in 3 numbers!")
+                    raise ValueError(Fore.RED +
+                                     "You should only put in 3 numbers!")
                 for i in self.answer1:
                     if i > 10 or i < 1:
-                        raise ValueError(
-                            "Please keep your answer between 1 and 10!")
+                        raise ValueError(Fore.RED +
+                                         "Please keep your answer"
+                                         " between 1 and 10!")
                     if not (int or float):
-                        raise ValueError("Please only put in numbers!")
+                        raise ValueError(Fore.RED +
+                                         "Please only put in numbers!")
                 break
             except ValueError as e:
-                print(
-                    f"Error! {e} Try again,"
-                    "just numbers this time, and 3 of 'em!")
+                print(Fore.RED +
+                      f"Error! {e} Try again, "
+                      "just numbers this time, and 3 of 'em!")
                 continue
         while True:
             try:
                 # this entire section works the exact same as the previous one
-                print(
-                    "On a scale of 1-10, rate:"
-                    "Cucumbers, tomatoes, and potatoes."
-                    )
+                print(Fore.WHITE +
+                      "On a scale of 1-10, rate:\n" +
+                      Fore.GREEN +
+                      "Cucumbers, tomatoes, and potatoes."
+                      )
                 print(
                     "Tomatoes aren't technically fruits,"
-                    "but you know what we mean!"
+                    " but you know what we mean!"
                     )
                 question2 = input(
-                    "Please separate your answers by commas,"
-                    "for example:\n5,3,10\n")
+                    "Please separate your answers by commas," +
+                    Fore.GREEN + "\nFor example: 5,3,10\n")
                 cleaner2 = question2.split(",")
                 self.answer2 = [int(x) for x in cleaner2]
                 if len(self.answer2) > 3:
-                    raise ValueError("You put in too many numbers!")
+                    raise ValueError(Fore.RED +
+                                     "You put in too many numbers!")
                 for i in self.answer2:
                     if i > 10 or i < 1:
-                        raise ValueError(
-                            "Please keep your answer between 1 and 10!")
+                        raise ValueError(Fore.RED +
+                                         "Please keep your answer"
+                                         " between 1 and 10!")
                     if not (int or float):
-                        raise ValueError("Please only put in numbers!")
+                        raise ValueError(Fore.RED +
+                                         "Please only put in numbers!")
                 break
             except ValueError as e:
-                print(
-                    f"Error! {e} Try again,"
-                    "just numbers this time, and 3 of 'em!")
+                print(Fore.RED +
+                      f"Error! {e} Try again, "
+                      "just numbers this time, and 3 of 'em!")
                 continue
         while True:
             try:
                 # section to separate data from non-vegetarians
                 if diet in ['no', 'n']:
                     question3 = input(
-                        "Beef, chicken, and pork? Please separate your"
-                        "answers by commas, for example \n 5,3,10\n"
+                        Fore.WHITE +
+                        "On a scale of 1-10, please rate:\n" +
+                        Fore.MAGENTA + "Beef, chicken, and pork." +
+                        Fore.RESET + "\nPlease separate your"
+                        " answers by commas." +
+                        Fore.MAGENTA + "\nFor example: 5,3,10\n"
                         )
                     cleaner3 = question3.split(",")
                     self.answer3 = [int(x) for x in cleaner3]
                     if len(self.answer3) != 3:
-                        raise ValueError(
-                            "You should only put in 3 numbers!")
+                        raise ValueError(Fore.RED +
+                                         "You should only put in 3 numbers!")
                     for i in self.answer3:
                         if i > 10 or i < 1:
-                            raise ValueError(
-                                "Please keep your answer between 1 and 10!")
+                            raise ValueError(Fore.RED +
+                                             "Please keep your answer"
+                                             " between 1 and 10!")
                         if not (int or float):
-                            raise ValueError("Please only put in numbers!")
+                            raise ValueError(Fore.RED +
+                                             "Please only put in numbers!")
                     break
             except ValueError as e:
-                print(
-                    f"Error! {e} Try again, just numbers this time,"
-                    "and 3 of 'em!")
+                print(Fore.RED +
+                      f"Error! {e} Try again, just numbers this time,"
+                      " and 3 of 'em!")
                 continue
             if diet == "no" or "n":
                 return self.answer1, self.answer2, self.answer3
@@ -130,7 +148,8 @@ class Big():
         in the interests of keeping the code
         short
         """
-        print("Adding results to spreadsheet...")
+        print(Fore.CYAN +
+              "Adding results to spreadsheet...")
         self.answer1 = [int(i) for i in self.answer1]
         self.answer2 = [int(i) for i in self.answer2]
 
@@ -138,11 +157,11 @@ class Big():
             self.answer3 = [int(i) for i in self.answer3]
             answers = self.answer1 + self.answer2 + self.answer3
             non_vegetarian.append_row(answers)
-            print("Results uploaded!")
+            print(Fore.CYAN + "Results uploaded!")
         if diet in ['yes', 'y']:
             answers = self.answer1 + self.answer2
             vegetarian.append_row(answers)
-            print("Results uploaded!")
+            print(Fore.CYAN + "Results uploaded!")
 
 
 def stat_calculator(stats, a, b, c, diet):
@@ -151,11 +170,13 @@ def stat_calculator(stats, a, b, c, diet):
     Uses the number of responses to calculate the average for each column
     Average score depends on if the user is a vegetarian or not
     """
-    # figured out how to do all this from gspread documentation
-    # https://docs.gspread.org/en/v6.0.0/user-guide.html#finding-a-cell
+    print(Fore.CYAN +
+          "Calculating average scores...")
     stats.update_cell(a, b, c)
     nveg_responses = int(stats.cell(12, 2).value)
     veg_responses = int(stats.cell(12, 3).value)
+    # figured out how to do all this from gspread documentation
+    # https://docs.gspread.org/en/v6.0.0/user-guide.html#finding-a-cell
 
     if diet in ['yes', 'y']:
         tnumbers_raw = SHEET.worksheet('Vegetarian').get_all_values()[1:]
@@ -231,7 +252,8 @@ def most_popular(stats, diet):
     Analyzes the statistics page after the averages are updated, and finds the
     most popular food overall
     """
-    print("Thank you for completing the survey!")
+    print(Fore.BLUE +
+          "Thank you for completing the survey!")
     if diet in ['yes', 'y']:
         numbers = stats.get('C2:C7')  # gets the values of the relevant columns
         names = stats.get('A2:A7')  # gets the names of the relevant columns
@@ -247,9 +269,11 @@ def most_popular(stats, diet):
         # https://stackoverflow.com/questions/268272/getting-key-with-maximum-value-in-dictionary
         # adds the favorite item to the relevant cell
         stats.update_cell(11, 3, favorite)
-        print("Here are the average scores for vegetarians:")
+        print(Fore.CYAN +
+              "Here are the average scores for vegetarians:")
         print(dct)
-        print(f'The most popular food is...\n{favorite}!')
+        print(Fore.CYAN +
+              f'The most popular food is...\n{favorite}!')
     elif diet in ['no', 'n']:
         # all of this works the same way, just targets different columns
         numbers = stats.get('B2:B10')
@@ -258,17 +282,19 @@ def most_popular(stats, diet):
                for name, number in zip(names, numbers)}
         favorite = max(dct, key=dct.get)
         stats.update_cell(11, 2, favorite)
-        print("Here are the average scores for non-vegetarians:")
+        print(Fore.CYAN +
+              "Here are the average scores for non-vegetarians:")
         print(dct)
-        print(f'The most popular food is...\n{favorite}!')
+        print(Fore.CYAN +
+              f'The most popular food is...\n{favorite}!')
 
 
 def main():
     """
     Runs all program functions
     """
-    print("Welcome to the Food Survey! You will be asked your"
-          "opinions on various food groups.\n")
+    print(Fore.BLUE + "Welcome to the Food Survey! You will be asked your"
+          " opinions on various food groups.\n")
     name = input("What is your name?\n").title()
     # code to restrict this to strings at certain character limits
     while True:  # this isn't in try/except form for simplicity's sake
@@ -277,11 +303,11 @@ def main():
         if diet in ['yes', 'y', 'no', 'n']:
             break
         else:
-            print("Oops! You can only answer yes or"
-                  "no to this question, try again!")
+            print(Fore.RED + "Oops! You can only answer yes or"
+                  " no to this question, try again!")
 
-    print(f'Welcome {name}! Since you answered "{diet}",'
-          'your survey will be tailored with this in mind!')
+    print(Fore.BLUE + f'Welcome {name}! Since you answered "{diet}",'
+          ' your survey will be tailored with this in mind!')
     non_vegetarian = SHEET.worksheet('Standard')
     vegetarian = SHEET.worksheet('Vegetarian')
     stats = SHEET.worksheet('Statistics')
