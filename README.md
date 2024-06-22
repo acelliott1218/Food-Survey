@@ -18,9 +18,9 @@ Data from vegetarians is separated for three reasons:
 
 ## **Project Goals**
 
-The most important goal of the project is to make an easy survey, which can be sent to friends and family, as well as prospective customers. Because of this, the most important part of the project is the survey its self, followed by the average responses, and finally the favorite overall food. 
+The most important goal of the project is to make an easy survey, which can be sent to friends and family, as well as prospective customers. Because of this, the most important part of the project is the survey itself, followed by the average responses, and finally the favorite overall food. 
 
-By running the survey through a terminal, rather than as a website, survey-takers have little choice than to focus on the content of the application its self -- since there are no ads, flashy elements, etc.
+By running the survey through a terminal, rather than as a website, survey-takers have little choice than to focus on the content of the application itself -- since there are no ads, flashy elements, etc.
 
 ***
 
@@ -157,7 +157,7 @@ The survey will tell you the current most popular food (out of the six or nine, 
 
 **Most Popular**
 + The averages list of the user's diet-group is then analyzed
-+ The cell with the highest average is, therefor, the most popular
++ The cell with the highest average is, therefore, the most popular
 + This information is then relayed to users at the end of the survey.
 
 **Color Coding**
@@ -220,7 +220,7 @@ The survey will tell you the current most popular food (out of the six or nine, 
 + Every thinkable error was tested for given exceptions
 + For reference, the valid input is "yes" or "no" (or "y" or "n") for the diet question
 + Valid input for the rating questions are only whole numbers between 1 and 10, separated by commas
-+ Since the internet connects the entire world, it's better safe than sorry. Therefor, the name input is not restricted.
++ Since the internet connects the entire world, it's better safe than sorry. therefore, the name input is not restricted.
 
 ### **Input Validation**
 
@@ -363,7 +363,7 @@ My Food Survey project was deployed using the Gitpod IDE, using Git and GitHub f
 
 8. Deployment
 
-> Scroll down and select either "Automatic deploys" or "Manual deploy". After the deployment is finish, head over to the "Overview" tab on heroku. On the top right, click "Open app" a new tab will open with the deployed project.
+> Scroll down and select either "Automatic deploys" or "Manual deploy". After the deployment is finished, head over to the "Overview" tab on heroku. On the top right, click "Open app" a new tab will open with the deployed project.
 
 ***
 
@@ -379,10 +379,10 @@ The content of this tool was created by me, aka. [Acelliott1218](https://github.
 
 The Python code provided was made with the knowledge gained through the CodeInstitute Full Stack Developer course.
 
-Google was used to find answers to questions which were not covered in the CodeInstitute Course. These are credit in the comments of the document its self.
+Google was used to find answers to questions which were not covered in the CodeInstitute Course. These are credit in the comments of the document itself.
 
 ### **Acknowledgements**
 
 I'd like to thank my mentor [Daisy McGirr](https://github.com/Dee-McG) for her guidance throughout my project.
 
-And [NixTS](https://github.com/NixTS) for the README for which this README's content is based on.
+And [NixTS](https://github.com/NixTS) for the README from which this README's content is based on.
