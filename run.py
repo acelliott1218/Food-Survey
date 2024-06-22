@@ -135,6 +135,7 @@ class Big():
                       f"Error! {e} Try again, just numbers this time,"
                       " and 3 of 'em!")
                 continue
+
     def appender(self, diet, vegetarian, non_vegetarian):
         """
         adds the relevant data from the survey
